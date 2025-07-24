@@ -118,16 +118,20 @@ public class UsuarioService {
         return UsuarioDTO.fromEntity(updatedUsuario);
     }
 
+// Agregar este método actualizado a tu UsuarioService existente
     @Transactional
     public Usuario save(Usuario usuario) {
-        if (usuarioRepository.findByUsername(usuario.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("El nombre de usuario ya existe");
-        }
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            throw new IllegalArgumentException("El email ya está registrado");
+        // Solo verificar duplicados si el usuario no tiene ID (es nuevo)
+        if (usuario.getId() == null) {
+            if (usuarioRepository.findByUsername(usuario.getUsername()).isPresent()) {
+                throw new IllegalArgumentException("El nombre de usuario ya existe");
+            }
+            if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+                throw new IllegalArgumentException("El email ya está registrado");
+            }
+            validarDatosUsuario(usuario);
         }
 
-        validarDatosUsuario(usuario);
         return usuarioRepository.save(usuario);
     }
 
