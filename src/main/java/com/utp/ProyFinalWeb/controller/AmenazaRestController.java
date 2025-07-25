@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/amenazas")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://frontangular-3sg3.vercel.app")
 public class AmenazaRestController {
 
     @Autowired
